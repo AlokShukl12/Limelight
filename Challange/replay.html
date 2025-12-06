@@ -1,0 +1,13 @@
+<!doctype html><html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stream Replay</title>
+<style>body{font-family:system-ui,Arial;margin:20px}#log{height:200px;overflow:auto;background:#f6f6f6;padding:8px;border:1px solid #ddd}button{margin-right:8px}</style></head>
+<body><h1>Replay JSONL (1 rec/sec)</h1><input type="file" id="file" accept=".jsonl,.txt"/>
+<div><button id="play">Play</button><button id="pause">Pause</button>
+<label>Speed <input type="number" id="speed" value="1" min="0.1" step="0.1">×</label></div>
+<pre id="log"></pre>
+<script>
+let lines=[],i=0,t=null;const log=document.getElementById('log'),speed=document.getElementById('speed');
+document.getElementById('file').addEventListener('change',async e=>{const txt=await e.target.files[0].text();lines=txt.trim().split('\n');i=0;log.textContent='Loaded '+lines.length+' lines';});
+function tick(){if(!lines.length)return;const o=JSON.parse(lines[i]);const ts=new Date(o.ts).toLocaleTimeString();log.textContent=`[${ts}] ${o.state} ${o.kw} kW (PF ${o.pf})\n`+log.textContent;i=(i+1)%lines.length;}
+document.getElementById('play').onclick=()=>{if(t)return; t=setInterval(tick,1000/parseFloat(speed.value||1));};
+document.getElementById('pause').onclick=()=>{clearInterval(t);t=null;};
+</script></body></html>

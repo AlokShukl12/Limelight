@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LimelightIT Device Stream Payload v2",
+  "type": "object",
+  "properties": {
+    "ts": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 timestamp (Asia/Kolkata)"
+    },
+    "machine_id": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "RUN",
+        "IDLE",
+        "OFF"
+      ]
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "ACTIVE",
+        "STANDBY",
+        "MAINT"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "OK",
+        "WARN",
+        "FAULT"
+      ]
+    },
+    "vr": {
+      "type": "number",
+      "description": "Phase R voltage (V)"
+    },
+    "vy": {
+      "type": "number",
+      "description": "Phase Y voltage (V)"
+    },
+    "vb": {
+      "type": "number",
+      "description": "Phase B voltage (V)"
+    },
+    "ir": {
+      "type": "number",
+      "description": "Phase R current (A)"
+    },
+    "iy": {
+      "type": "number",
+      "description": "Phase Y current (A)"
+    },
+    "ib": {
+      "type": "number",
+      "description": "Phase B current (A)"
+    },
+    "kw": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Active power (kW)"
+    },
+    "kwh_total": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Cumulative energy (kWh)"
+    },
+    "pf": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Power factor (0\u20261)"
+    },
+    "count_total": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Cumulative unit count"
+    },
+    "temp_c": {
+      "type": "number",
+      "description": "Controller temperature (\u00b0C)"
+    },
+    "alarm_code": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Optional alarm code when status!=OK"
+    }
+  },
+  "required": [
+    "ts",
+    "machine_id",
+    "state",
+    "mode",
+    "status",
+    "vr",
+    "vy",
+    "vb",
+    "ir",
+    "iy",
+    "ib",
+    "kw",
+    "kwh_total",
+    "pf",
+    "count_total"
+  ]
+}
